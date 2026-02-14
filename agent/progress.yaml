@@ -215,7 +215,7 @@ tasks:
         End-to-end testing, bug fixes, polish.
 
 documentation:
-  design_documents: 1
+  design_documents: 2
   milestone_documents: 3
   pattern_documents: 1
   task_documents: 1
