@@ -28,15 +28,15 @@ milestones:
   - id: M2
     name: Core Implementation
     status: in_progress
-    progress: 0
+    progress: 20
     started: 2026-02-14
     completed: null
     estimated_weeks: 1
-    tasks_completed: 0
+    tasks_completed: 1
     tasks_total: 5
     notes: |
       Implement weather tools, standalone server, server factory, caching, and error handling.
-      Note: M3 tasks are for wrapper server project, not this core library.
+      All 5 MCP weather tools implemented with validation and error handling.
   
   - id: M3
     name: Wrapper Server Deployment
@@ -127,12 +127,14 @@ tasks:
   milestone_2:
     - id: task-8
       name: Implement Weather Tools
-      status: not_started
+      status: completed
       file: agent/tasks/task-8-implement-tools.md
       estimated_hours: 4
-      completed_date: null
+      completed_date: 2026-02-14
       notes: |
-        Implement all 5 MCP weather tools with validation and error handling.
+        Implemented all 5 MCP weather tools: get-current, get-hourly, get-daily,
+        get-alerts, and geocode. All tools include validation, error handling,
+        and proper MCP schema definitions.
     
     - id: task-9
       name: Implement Standalone Server
