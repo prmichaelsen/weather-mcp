@@ -14,16 +14,16 @@ milestones:
   - id: M1
     name: Project Foundation
     status: in_progress
-    progress: 71
+    progress: 86
     started: 2026-02-14
     completed: null
     estimated_weeks: 1
-    tasks_completed: 5
+    tasks_completed: 6
     tasks_total: 7
     notes: |
       Setting up the basic project structure and configuration files.
       ACP structure initialized, requirements documented, project structure created,
-      build system configured, OpenWeatherMap client implemented with caching.
+      build system configured, OpenWeatherMap client implemented, environment config complete.
   
   - id: M2
     name: Core Implementation
@@ -105,12 +105,13 @@ tasks:
     
     - id: task-6
       name: Create Environment Configuration
-      status: not_started
+      status: completed
       file: agent/tasks/task-6-environment.md
       estimated_hours: 1
-      completed_date: null
+      completed_date: 2026-02-14
       notes: |
-        .env.example, .gitignore, environment variable handling.
+        Created .env.example with all environment variables. Updated src/config.ts
+        with dotenv loading, validation, and helpful error messages.
     
     - id: task-7
       name: Create README
