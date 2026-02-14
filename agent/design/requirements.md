@@ -158,9 +158,23 @@ This project follows the **static MCP configuration pattern** used by remember-m
 ### API Integration
 - **OpenWeatherMap One Call API 3.0**
   - Base URL: `https://api.openweathermap.org/data/3.0/onecall`
-  - Authentication: API key in query parameter
+  - Authentication: API key in query parameter (`appid`)
   - Rate Limit: 1,000 calls/day (free tier)
   - Response Format: JSON
+  
+**Available Endpoints**:
+1. **Current & Forecast**: `/data/3.0/onecall?lat={lat}&lon={lon}&appid={API key}`
+   - Returns: current, minutely (1 hour), hourly (48 hours), daily (8 days), alerts
+   - Optional `exclude` parameter to omit data parts (e.g., `exclude=hourly,daily`)
+   
+2. **Historical (Time Machine)**: `/data/3.0/onecall/timemachine?lat={lat}&lon={lon}&dt={timestamp}&appid={API key}`
+   - Returns: historical weather data for any Unix timestamp
+   
+3. **Day Summary**: `/data/3.0/onecall/day_summary?lat={lat}&lon={lon}&date={YYYY-MM-DD}&appid={API key}`
+   - Returns: aggregated weather statistics for a specific day
+   
+4. **Weather Overview**: `/data/3.0/onecall/overview?lat={lat}&lon={lon}&appid={API key}`
+   - Returns: AI-generated human-readable weather summary
 
 ---
 
