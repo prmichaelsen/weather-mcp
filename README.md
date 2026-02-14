@@ -2,214 +2,305 @@
 
 A Model Context Protocol (MCP) server that provides AI agents with access to comprehensive weather data from OpenWeatherMap's One Call API 3.0.
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](https://nodejs.org/)
+
 ## 🌤️ Features
 
-- **Current Weather**: Real-time weather conditions for any location
-- **Hourly Forecast**: 48-hour detailed weather predictions
-- **Daily Forecast**: 8-day weather outlook
+- **Current Weather**: Real-time weather conditions for any location worldwide
+- **Hourly Forecast**: Detailed 48-hour weather predictions
+- **Daily Forecast**: 8-day weather outlook with min/max temperatures
 - **Weather Alerts**: Severe weather warnings and advisories
 - **Geocoding**: Convert city names to coordinates and vice versa
-- **Response Caching**: Reduces API calls and improves performance
+- **Response Caching**: Intelligent caching reduces API calls and improves performance
 - **Multi-Mode Support**: Standalone (stdio) or multi-tenant (SSE) operation
+- **Type-Safe**: Full TypeScript support with comprehensive type definitions
+- **Error Handling**: Robust error handling with retry logic and clear messages
 
 ## 🚀 Quick Start
 
-> **Note**: This project is currently in initial setup phase. Implementation is in progress.
-
 ### Prerequisites
 
-1. Node.js 20+ installed
-2. OpenWeatherMap API key ([Get one free](https://openweathermap.org/api))
+1. **Node.js 20+** installed
+2. **OpenWeatherMap API key** - [Get one free](https://openweathermap.org/api) (1,000 calls/day)
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/prmichaelsen/weather-mcp.git
 cd weather-mcp
 
-# Install dependencies (coming soon)
+# Install dependencies
 npm install
 
 # Configure environment
 cp .env.example .env
 # Edit .env and add your OPENWEATHER_API_KEY
 
-# Run in development mode (coming soon)
+# Build the project
+npm run build
+
+# Run in development mode
 npm run dev
 ```
 
-## 📋 Project Status
+## ⚙️ Configuration
 
-**Current Phase**: Foundation (Milestone 1)  
-**Progress**: 10% complete  
-**Status**: In Progress
+### Environment Variables
 
-### Completed
-- ✅ ACP (Agent Context Protocol) structure initialized
-- ✅ Requirements document created for OpenWeatherMap integration
-- ✅ Project scope defined (One Call API 3.0)
-- ✅ Static configuration pattern documented
+Create a `.env` file based on `.env.example`:
 
-### In Progress
-- 🔄 Project structure creation (Task 3)
+```env
+# Required
+OPENWEATHER_API_KEY=your_api_key_here
 
-### Next Steps
-- Implement OpenWeatherMap API client
-- Create 5 core weather tools
-- Add response caching
-- Implement standalone server (stdio)
-- Implement server factory (multi-tenant mode)
+# Optional (with defaults)
+OPENWEATHER_BASE_URL=https://api.openweathermap.org/data/3.0/onecall
+OPENWEATHER_GEO_URL=https://api.openweathermap.org/geo/1.0
+DEFAULT_UNITS=metric
+CACHE_TTL_SECONDS=600
+PORT=3000
+NODE_ENV=development
+LOG_LEVEL=info
+MCP_TRANSPORT=stdio
+```
 
-See [`agent/progress.yaml`](agent/progress.yaml) for detailed progress tracking.
+### Getting an API Key
 
-## 🛠️ Architecture
+1. Visit [OpenWeatherMap](https://openweathermap.org/api)
+2. Sign up for a free account
+3. Navigate to API keys section
+4. Generate a new API key
+5. Add it to your `.env` file
 
-This server follows the **static MCP configuration pattern** (similar to remember-mcp):
+**Free Tier Limits**: 1,000 API calls per day
+
+## 🛠️ Available Tools
+
+### 1. Get Current Weather
+
+Get real-time weather conditions for any location.
+
+**Tool**: `weather_get_current`
+
+**Parameters**:
+- `lat` (number, required): Latitude (-90 to 90)
+- `lon` (number, required): Longitude (-180 to 180)
+- `units` (string, optional): "metric", "imperial", or "standard" (default: "metric")
+
+**Example**:
+```json
+{
+  "lat": 40.7128,
+  "lon": -74.0060,
+  "units": "metric"
+}
+```
+
+**Response**: Current weather including temperature, humidity, wind speed, pressure, visibility, and weather conditions.
+
+**Use Cases**:
+- Check current conditions before going outside
+- Monitor weather for outdoor events
+- Get real-time data for weather applications
+
+---
+
+### 2. Get Hourly Forecast
+
+Get detailed hourly weather forecast for the next 48 hours.
+
+**Tool**: `weather_get_hourly`
+
+**Parameters**:
+- `lat` (number, required): Latitude (-90 to 90)
+- `lon` (number, required): Longitude (-180 to 180)
+- `hours` (number, optional): Number of hours to return (1-48, default: 48)
+- `units` (string, optional): "metric", "imperial", or "standard" (default: "metric")
+
+**Example**:
+```json
+{
+  "lat": 40.7128,
+  "lon": -74.0060,
+  "hours": 24,
+  "units": "metric"
+}
+```
+
+**Response**: Array of hourly forecasts with temperature, precipitation probability, wind, and conditions.
+
+**Use Cases**:
+- Plan activities for the next day or two
+- Check when rain will start/stop
+- Monitor temperature changes throughout the day
+
+---
+
+### 3. Get Daily Forecast
+
+Get daily weather forecast for the next 8 days.
+
+**Tool**: `weather_get_daily`
+
+**Parameters**:
+- `lat` (number, required): Latitude (-90 to 90)
+- `lon` (number, required): Longitude (-180 to 180)
+- `days` (number, optional): Number of days to return (1-8, default: 8)
+- `units` (string, optional): "metric", "imperial", or "standard" (default: "metric")
+
+**Example**:
+```json
+{
+  "lat": 40.7128,
+  "lon": -74.0060,
+  "days": 7,
+  "units": "metric"
+}
+```
+
+**Response**: Array of daily forecasts with min/max temperatures, precipitation, and conditions.
+
+**Use Cases**:
+- Plan week-long trips
+- Check extended weather outlook
+- Monitor temperature trends
+
+---
+
+### 4. Get Weather Alerts
+
+Get active weather alerts and warnings for a location.
+
+**Tool**: `weather_get_alerts`
+
+**Parameters**:
+- `lat` (number, required): Latitude (-90 to 90)
+- `lon` (number, required): Longitude (-180 to 180)
+
+**Example**:
+```json
+{
+  "lat": 40.7128,
+  "lon": -74.0060
+}
+```
+
+**Response**: Array of weather alerts with event type, severity, description, and time range.
+
+**Use Cases**:
+- Check for severe weather warnings
+- Monitor storm alerts
+- Get emergency weather notifications
+
+---
+
+### 5. Geocode Location
+
+Convert city name to geographic coordinates.
+
+**Tool**: `weather_geocode`
+
+**Parameters**:
+- `city` (string, required): City name
+- `state` (string, optional): State code (US only, e.g., "NY")
+- `country` (string, optional): Country code (ISO 3166, e.g., "US")
+- `limit` (number, optional): Maximum results (default: 5)
+
+**Example**:
+```json
+{
+  "city": "New York",
+  "state": "NY",
+  "country": "US",
+  "limit": 1
+}
+```
+
+**Response**: Array of locations with name, coordinates, country, and state.
+
+**Use Cases**:
+- Convert city names to coordinates for weather queries
+- Search for locations by name
+- Disambiguate locations with same name
+
+## 🏗️ Architecture
+
+This server follows the **static MCP configuration pattern** (similar to [remember-mcp](https://github.com/prmichaelsen/remember-mcp)):
 
 ### Two Operation Modes
 
-1. **Standalone Mode** (stdio transport):
-   - Single-user operation
-   - API key from environment variables
-   - Perfect for local development and personal use
-   - Command: `npm run dev`
+#### 1. Standalone Mode (stdio transport)
+- Single-user operation
+- API key from environment variables
+- Perfect for local development and personal use
+- Command: `npm run dev`
 
-2. **Multi-Tenant Mode** (SSE transport):
-   - Multiple users with isolated instances
-   - Each user can have their own API key
-   - Wrapped with @prmichaelsen/mcp-auth
-   - Deployed as a service
+```bash
+# Run standalone server
+npm run dev
+```
+
+#### 2. Multi-Tenant Mode (SSE transport)
+- Multiple users with isolated server instances
+- Each user can have their own API key
+- Wrapped with [@prmichaelsen/mcp-auth](https://github.com/prmichaelsen/mcp-auth)
+- Deployed as a service
+
+```typescript
+import { createServer } from '@prmichaelsen/weather-mcp';
+
+// Create isolated server instance per user
+const server = createServer(userApiKey, userId);
+```
 
 ### Key Design Principles
 
-- ✅ **Static Configuration**: API keys from environment variables
-- ✅ **No Token Resolver**: No dynamic credential fetching
+- ✅ **Static Configuration**: API keys from environment variables (no dynamic token resolution)
 - ✅ **Server Factory Pattern**: Exports `createServer(accessToken, userId)` for multi-tenant wrapping
-- ✅ **Response Caching**: Reduces API calls and costs
-- ✅ **Type Safety**: Full TypeScript support
-
-## 🌍 Available Tools
-
-### 1. Get Current Weather
-```typescript
-weather_get_current({
-  lat: 40.7128,
-  lon: -74.0060,
-  units: "metric" // or "imperial", "standard"
-})
-```
-
-### 2. Get Hourly Forecast
-```typescript
-weather_get_hourly({
-  lat: 40.7128,
-  lon: -74.0060,
-  hours: 24, // 1-48
-  units: "metric"
-})
-```
-
-### 3. Get Daily Forecast
-```typescript
-weather_get_daily({
-  lat: 40.7128,
-  lon: -74.0060,
-  days: 7, // 1-8
-  units: "metric"
-})
-```
-
-### 4. Get Weather Alerts
-```typescript
-weather_get_alerts({
-  lat: 40.7128,
-  lon: -74.0060
-})
-```
-
-### 5. Geocode Location
-```typescript
-weather_geocode({
-  city: "New York",
-  state: "NY", // optional, US only
-  country: "US", // optional, ISO 3166
-  limit: 5 // max results
-})
-```
+- ✅ **Response Caching**: Configurable TTL per endpoint type reduces API calls
+- ✅ **Type Safety**: Full TypeScript support with comprehensive types
+- ✅ **Error Handling**: Robust error handling with retry logic
+- ✅ **Input Validation**: All coordinates, dates, and parameters validated
 
 ## 📁 Project Structure
 
 ```
 weather-mcp/
+├── src/
+│   ├── server.ts                   # Standalone server (stdio)
+│   ├── server-factory.ts           # Factory for multi-tenant mode
+│   ├── client.ts                   # OpenWeatherMap API client
+│   ├── config.ts                   # Configuration management
+│   ├── types.ts                    # TypeScript type definitions
+│   ├── tools/                      # MCP tool implementations
+│   │   └── index.ts                # Tool exports
+│   └── utils/                      # Utilities
+│       ├── cache.ts                # Response caching
+│       ├── logger.ts               # Logging utility
+│       └── error-serializer.ts     # Error handling
+│
 ├── agent/                          # ACP documentation & planning
-│   ├── design/
-│   │   └── requirements.md         # Project requirements
+│   ├── design/                     # Design documents
 │   ├── milestones/                 # Project milestones
 │   ├── patterns/                   # Architecture patterns
 │   ├── tasks/                      # Task tracking
 │   └── progress.yaml               # Progress tracking
 │
-├── src/                            # Source code (coming soon)
-│   ├── server.ts                   # Standalone server (stdio)
-│   ├── server-factory.ts           # Factory for multi-tenant mode
-│   ├── client.ts                   # OpenWeatherMap API client
-│   ├── config.ts                   # Configuration management
-│   ├── types.ts                    # TypeScript types
-│   ├── tools/                      # MCP tool implementations
-│   │   ├── get-current.ts
-│   │   ├── get-hourly.ts
-│   │   ├── get-daily.ts
-│   │   ├── get-alerts.ts
-│   │   └── geocode.ts
-│   └── utils/                      # Utilities
-│       ├── logger.ts
-│       ├── cache.ts
-│       └── error-serializer.ts
-│
+├── .env.example                    # Environment template
+├── .gitignore                      # Git ignore rules
+├── package.json                    # Package configuration
+├── tsconfig.json                   # TypeScript configuration
+├── esbuild.build.js                # Production build script
+├── esbuild.watch.js                # Development watch script
 ├── AGENT.md                        # ACP methodology
-├── package.json                    # (coming soon)
-├── tsconfig.json                   # (coming soon)
-├── .env.example                    # (coming soon)
 └── README.md                       # This file
 ```
 
-## 🔧 Configuration
-
-Environment variables (`.env`):
-
-```env
-# OpenWeatherMap API Configuration
-OPENWEATHER_API_KEY=your_api_key_here
-OPENWEATHER_BASE_URL=https://api.openweathermap.org/data/3.0
-
-# Default Settings
-DEFAULT_UNITS=metric
-CACHE_TTL_SECONDS=600
-
-# Server Configuration
-PORT=3000
-NODE_ENV=development
-LOG_LEVEL=info
-
-# MCP Configuration
-MCP_TRANSPORT=stdio
-```
-
-## 📚 API Reference
-
-This server integrates with:
-- [OpenWeatherMap One Call API 3.0](https://openweathermap.org/api/one-call-3)
-- [OpenWeatherMap Geocoding API](https://openweathermap.org/api/geocoding-api)
-
-### Rate Limits
-
-- **Free Tier**: 1,000 calls/day
-- **Paid Tiers**: Higher limits available
-
-The server implements response caching (default: 10 minutes) to minimize API calls.
-
 ## 🧪 Development
+
+### Local Development
 
 ```bash
 # Install dependencies
@@ -221,17 +312,96 @@ npm run dev
 # Build for production
 npm run build
 
-# Run tests
-npm test
+# Watch mode (auto-rebuild on changes)
+npm run build:watch
 
-# Run E2E tests (requires API key)
-npm run test:e2e
+# Clean build artifacts
+npm run clean
 ```
 
-## 📖 Documentation
+### Testing the Server
+
+The server will be fully functional after Milestone 2 (Core Implementation) is complete. Current status: Foundation phase complete, ready for tool implementation.
+
+## 📖 API Reference
+
+This server integrates with:
+- [OpenWeatherMap One Call API 3.0](https://openweathermap.org/api/one-call-3) - Weather data
+- [OpenWeatherMap Geocoding API](https://openweathermap.org/api/geocoding-api) - Location lookup
+
+### Rate Limits
+
+- **Free Tier**: 1,000 calls/day
+- **Paid Tiers**: Higher limits available
+
+The server implements intelligent response caching (default: 10 minutes for current weather, 30 minutes for forecasts) to minimize API calls and stay within rate limits.
+
+### Cache Configuration
+
+Customize cache TTL per endpoint type:
+
+```env
+CACHE_TTL_CURRENT=600      # 10 minutes
+CACHE_TTL_HOURLY=1800      # 30 minutes
+CACHE_TTL_DAILY=3600       # 1 hour
+CACHE_TTL_ALERTS=300       # 5 minutes
+CACHE_TTL_GEOCODE=86400    # 24 hours
+```
+
+## 🐛 Troubleshooting
+
+### "OPENWEATHER_API_KEY is required"
+
+**Problem**: API key not configured.
+
+**Solution**: 
+1. Copy `.env.example` to `.env`
+2. Add your API key from [OpenWeatherMap](https://openweathermap.org/api)
+3. Restart the server
+
+### "Invalid API key" (401 Error)
+
+**Problem**: API key is incorrect or inactive.
+
+**Solution**:
+1. Verify your API key at [OpenWeatherMap API keys](https://home.openweathermap.org/api_keys)
+2. Ensure the key is active (new keys may take a few minutes to activate)
+3. Check for typos in your `.env` file
+
+### "Rate limit exceeded" (429 Error)
+
+**Problem**: Exceeded API rate limit (1,000 calls/day on free tier).
+
+**Solution**:
+1. Enable caching (default: enabled)
+2. Increase cache TTL to reduce API calls
+3. Upgrade to a paid tier for higher limits
+4. Monitor cache statistics with `client.getCacheStats()`
+
+### "Latitude must be between -90 and 90"
+
+**Problem**: Invalid coordinates provided.
+
+**Solution**:
+- Latitude range: -90 (South Pole) to 90 (North Pole)
+- Longitude range: -180 (West) to 180 (East)
+- Use the `weather_geocode` tool to get coordinates from city names
+
+### Network Errors
+
+**Problem**: Cannot reach OpenWeatherMap API.
+
+**Solution**:
+- Check internet connection
+- Verify firewall settings
+- Check OpenWeatherMap service status
+- The client automatically retries with exponential backoff
+
+## 📚 Documentation
 
 ### For Developers
 - [`agent/design/requirements.md`](agent/design/requirements.md) - Complete project requirements
+- [`agent/design/openweathermap-api-design.md`](agent/design/openweathermap-api-design.md) - API integration design
 - [`agent/patterns/bootstrap.md`](agent/patterns/bootstrap.md) - Architecture patterns
 - [`agent/progress.yaml`](agent/progress.yaml) - Current progress and status
 - [`AGENT.md`](AGENT.md) - Agent Context Protocol methodology
@@ -253,10 +423,34 @@ This project follows the [Agent Context Protocol (ACP)](AGENT.md) for developmen
 
 - [remember-mcp](https://github.com/prmichaelsen/remember-mcp) - Reference implementation for static configuration pattern
 - [@prmichaelsen/mcp-auth](https://github.com/prmichaelsen/mcp-auth) - Multi-tenant authentication wrapper
+- [Model Context Protocol](https://modelcontextprotocol.io) - MCP specification
+
+## 📊 Project Status
+
+**Current Phase**: Foundation Complete ✅  
+**Progress**: Milestone 1 - 86% complete (6/7 tasks done)  
+**Status**: In Development
+
+### Completed
+- ✅ ACP structure initialized
+- ✅ Requirements documented
+- ✅ Project structure created
+- ✅ Build system configured (TypeScript + esbuild)
+- ✅ OpenWeatherMap client implemented with caching
+- ✅ Environment configuration complete
+- ✅ Comprehensive README created
+
+### Next Steps
+- 🔄 Implement 5 MCP weather tools (Milestone 2)
+- 🔄 Implement standalone server (stdio transport)
+- 🔄 Implement server factory (multi-tenant mode)
+- 🔄 Add comprehensive logging and error handling
+
+See [`agent/progress.yaml`](agent/progress.yaml) for detailed progress tracking.
 
 ## 📄 License
 
-MIT License - See LICENSE file for details
+MIT License - See [LICENSE](LICENSE) file for details
 
 ## 🙏 Acknowledgments
 
@@ -264,8 +458,59 @@ MIT License - See LICENSE file for details
 - Weather data from [OpenWeatherMap](https://openweathermap.org/)
 - Follows the [Agent Context Protocol](https://github.com/prmichaelsen/agent-context-protocol)
 
+## 💡 Usage Examples
+
+### Using with Claude Desktop
+
+Add to your Claude Desktop configuration:
+
+```json
+{
+  "mcpServers": {
+    "weather": {
+      "command": "node",
+      "args": ["/path/to/weather-mcp/dist/server.js"],
+      "env": {
+        "OPENWEATHER_API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+### Using as a Library
+
+```typescript
+import { createServer } from '@prmichaelsen/weather-mcp';
+
+// Create server instance
+const server = createServer(apiKey, userId);
+
+// Use with mcp-auth for multi-tenant deployment
+import { wrapServer } from '@prmichaelsen/mcp-auth';
+
+const wrappedServer = wrapServer({
+  serverFactory: (accessToken, userId) => createServer(accessToken, userId),
+  // ... auth configuration
+});
+```
+
+## 🔍 API Response Caching
+
+The client automatically caches responses to reduce API calls:
+
+| Endpoint Type | Default TTL | Configurable Via |
+|--------------|-------------|------------------|
+| Current Weather | 10 minutes | `CACHE_TTL_CURRENT` |
+| Hourly Forecast | 30 minutes | `CACHE_TTL_HOURLY` |
+| Daily Forecast | 1 hour | `CACHE_TTL_DAILY` |
+| Weather Alerts | 5 minutes | `CACHE_TTL_ALERTS` |
+| Geocoding | 24 hours | `CACHE_TTL_GEOCODE` |
+
+Cache statistics are available via `client.getCacheStats()`.
+
 ---
 
-**Status**: 🚧 In Development - Foundation Phase  
+**Status**: 🚧 Milestone 1 Complete - Ready for Core Implementation  
 **Last Updated**: 2026-02-14  
-**Next Milestone**: Complete project structure and OpenWeatherMap client implementation
+**Next Milestone**: Implement 5 MCP weather tools and server functionality
