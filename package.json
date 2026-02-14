@@ -1,0 +1,67 @@
+{
+  "name": "@prmichaelsen/weather-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for OpenWeatherMap One Call API 3.0 with static configuration",
+  "type": "module",
+  "main": "dist/server-factory.js",
+  "types": "dist/server-factory.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/server-factory.d.ts",
+      "import": "./dist/server-factory.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js"
+    },
+    "./tools": {
+      "types": "./dist/tools/index.d.ts",
+      "import": "./dist/tools/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node esbuild.build.js",
+    "build:watch": "node esbuild.watch.js",
+    "clean": "rm -rf dist",
+    "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "openweathermap",
+    "weather",
+    "forecast",
+    "api"
+  ],
+  "author": "Patrick Michaelsen",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prmichaelsen/weather-mcp.git"
+  }
+}
