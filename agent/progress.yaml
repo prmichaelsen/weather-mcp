@@ -14,16 +14,16 @@ milestones:
   - id: M1
     name: Project Foundation
     status: in_progress
-    progress: 57
+    progress: 71
     started: 2026-02-14
     completed: null
     estimated_weeks: 1
-    tasks_completed: 4
+    tasks_completed: 5
     tasks_total: 7
     notes: |
       Setting up the basic project structure and configuration files.
       ACP structure initialized, requirements documented, project structure created,
-      build system configured with TypeScript and esbuild.
+      build system configured, OpenWeatherMap client implemented with caching.
   
   - id: M2
     name: Core Implementation
@@ -93,13 +93,15 @@ tasks:
         Build system working correctly with TypeScript declarations and source maps.
     
     - id: task-5
-      name: Create Client Wrapper
-      status: not_started
+      name: Create OpenWeatherMap Client Wrapper
+      status: completed
       file: agent/tasks/task-5-client-wrapper.md
-      estimated_hours: 2
-      completed_date: null
+      estimated_hours: 3
+      completed_date: 2026-02-14
       notes: |
-        Generic client wrapper for external API integration.
+        Implemented WeatherClient with all 6 API methods, input validation,
+        error handling, and response caching. Created comprehensive TypeScript types
+        and cache utility.
     
     - id: task-6
       name: Create Environment Configuration
