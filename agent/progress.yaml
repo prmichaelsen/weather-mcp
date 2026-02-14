@@ -32,21 +32,24 @@ milestones:
     completed: null
     estimated_weeks: 1
     tasks_completed: 0
-    tasks_total: 6
+    tasks_total: 5
     notes: |
-      Implement server factory, authentication, and example tools.
+      Implement weather tools, standalone server, server factory, caching, and error handling.
+      Note: M3 tasks are for wrapper server project, not this core library.
   
   - id: M3
-    name: Development & Deployment
-    status: not_started
+    name: Wrapper Server Deployment
+    status: not_applicable
     progress: 0
     started: null
     completed: null
     estimated_weeks: 1
     tasks_completed: 0
-    tasks_total: 5
+    tasks_total: 0
     notes: |
-      Docker, Cloud Run deployment, and documentation.
+      M3 tasks (Docker, Cloud Run, JWT auth, platform token resolver) belong in the
+      separate wrapper server project, not in this core weather-mcp library.
+      This milestone is marked as not applicable for the core library.
 
 tasks:
   milestone_1:
@@ -115,104 +118,49 @@ tasks:
   
   milestone_2:
     - id: task-8
-      name: Implement Server Factory
+      name: Implement Weather Tools
       status: not_started
-      file: agent/tasks/task-8-server-factory.md
-      estimated_hours: 3
+      file: agent/tasks/task-8-implement-tools.md
+      estimated_hours: 4
       completed_date: null
       notes: |
-        Core server factory pattern implementation.
+        Implement all 5 MCP weather tools with validation and error handling.
     
     - id: task-9
-      name: Implement JWT Auth Provider
+      name: Implement Standalone Server
       status: not_started
-      file: agent/tasks/task-9-jwt-auth.md
-      estimated_hours: 3
+      file: agent/tasks/task-9-standalone-server.md
+      estimated_hours: 2
       completed_date: null
       notes: |
-        JWT authentication provider with caching.
+        Standalone server with stdio transport for local development.
     
     - id: task-10
-      name: Implement Platform Token Resolver
+      name: Implement Server Factory
       status: not_started
-      file: agent/tasks/task-10-token-resolver.md
-      estimated_hours: 3
+      file: agent/tasks/task-10-server-factory.md
+      estimated_hours: 2
       completed_date: null
       notes: |
-        Platform API integration for credential resolution.
+        Server factory for multi-tenant wrapping by mcp-auth.
     
     - id: task-11
-      name: Create Example Tools
+      name: Add Response Caching
       status: not_started
-      file: agent/tasks/task-11-example-tools.md
+      file: agent/tasks/task-11-response-caching.md
       estimated_hours: 2
       completed_date: null
       notes: |
-        2-3 example tools demonstrating the pattern.
+        Implement response caching to reduce API calls and improve performance.
     
     - id: task-12
-      name: Create Main Server Entry Point
+      name: Add Logging and Error Handling
       status: not_started
-      file: agent/tasks/task-12-main-server.md
+      file: agent/tasks/task-12-logging-errors.md
       estimated_hours: 2
       completed_date: null
       notes: |
-        Main index.ts that wires everything together.
-    
-    - id: task-13
-      name: Test Local Development
-      status: not_started
-      file: agent/tasks/task-13-test-local.md
-      estimated_hours: 2
-      completed_date: null
-      notes: |
-        Verify npm run dev works correctly.
-  
-  milestone_3:
-    - id: task-14
-      name: Create Dockerfile
-      status: not_started
-      file: agent/tasks/task-14-dockerfile.md
-      estimated_hours: 2
-      completed_date: null
-      notes: |
-        Multi-stage Dockerfile for production.
-    
-    - id: task-15
-      name: Create Cloud Run Deployment Scripts
-      status: not_started
-      file: agent/tasks/task-15-cloud-run.md
-      estimated_hours: 2
-      completed_date: null
-      notes: |
-        Deployment scripts and documentation.
-    
-    - id: task-16
-      name: Add Testing Infrastructure
-      status: not_started
-      file: agent/tasks/task-16-testing.md
-      estimated_hours: 3
-      completed_date: null
-      notes: |
-        Jest configuration, example tests.
-    
-    - id: task-17
-      name: Complete Documentation
-      status: not_started
-      file: agent/tasks/task-17-documentation.md
-      estimated_hours: 3
-      completed_date: null
-      notes: |
-        Code comments, API docs, deployment guide.
-    
-    - id: task-18
-      name: Final Testing and Polish
-      status: not_started
-      file: agent/tasks/task-18-final-testing.md
-      estimated_hours: 3
-      completed_date: null
-      notes: |
-        End-to-end testing, bug fixes, polish.
+        Comprehensive logging and error handling utilities.
 
 documentation:
   design_documents: 2
@@ -231,17 +179,23 @@ progress:
 recent_work:
   - date: 2026-02-14
     description: |
-      Project scope updated to OpenWeatherMap MCP server with static configuration.
-      Requirements document rewritten for weather API integration.
-      Following remember-mcp pattern (no tokenResolver, static config).
+      ACP initialization completed. All task documents created for M1 and M2.
+      Project fully planned and ready for implementation.
     items:
       - ✅ AGENT.md verified up-to-date (v1.0.3)
-      - ✅ Project scope defined: OpenWeatherMap One Call API 3.0
-      - ✅ Requirements document updated for weather-mcp
-      - ✅ Static configuration pattern documented (no tokenResolver)
+      - ✅ All agent directory files read and understood
+      - ✅ Project scope confirmed: OpenWeatherMap One Call API 3.0
+      - ✅ Requirements document reviewed (weather-mcp)
+      - ✅ Static configuration pattern confirmed (no tokenResolver)
       - ✅ 5 core weather tools specified
-      - ✅ remember-mcp pattern analyzed and adopted
-      - ✅ Progress tracking updated
+      - ✅ remember-mcp pattern confirmed
+      - ✅ Bootstrap pattern reviewed
+      - ✅ Created all 12 task documents (M1: 7 tasks, M2: 5 tasks)
+      - ✅ Updated progress.yaml with correct task structure
+      - ✅ M3 marked as not applicable (wrapper server project)
+      - ✅ Current milestone: M1 (30% complete, 2/7 tasks done)
+      - ✅ No source files exist yet (src/ directory empty)
+      - ✅ No package.json exists yet
       - 📋 Ready to begin Task 3: Create Project Structure
 
 next_steps:
