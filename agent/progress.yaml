@@ -28,15 +28,15 @@ milestones:
   - id: M2
     name: Core Implementation
     status: in_progress
-    progress: 20
+    progress: 40
     started: 2026-02-14
     completed: null
     estimated_weeks: 1
-    tasks_completed: 1
+    tasks_completed: 2
     tasks_total: 5
     notes: |
       Implement weather tools, standalone server, server factory, caching, and error handling.
-      All 5 MCP weather tools implemented with validation and error handling.
+      All 5 MCP weather tools implemented. Standalone server with stdio transport complete.
   
   - id: M3
     name: Wrapper Server Deployment
@@ -138,12 +138,13 @@ tasks:
     
     - id: task-9
       name: Implement Standalone Server
-      status: not_started
+      status: completed
       file: agent/tasks/task-9-standalone-server.md
       estimated_hours: 2
-      completed_date: null
+      completed_date: 2026-02-14
       notes: |
-        Standalone server with stdio transport for local development.
+        Implemented standalone MCP server with stdio transport. Registers all 5 tools,
+        handles tool execution, includes graceful shutdown, and error handling.
     
     - id: task-10
       name: Implement Server Factory
