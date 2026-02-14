@@ -1,0 +1,302 @@
+# MCP Multi-Tenant Starter - Progress Tracking
+
+project:
+  name: mcp-multitenant-starter
+  version: 0.1.0
+  started: 2026-02-14
+  status: in_progress
+  current_milestone: M1
+  description: |
+    A starter template for building multi-tenant MCP servers with authentication,
+    credential management, and deployment infrastructure.
+
+milestones:
+  - id: M1
+    name: Project Foundation
+    status: in_progress
+    progress: 30
+    started: 2026-02-14
+    completed: null
+    estimated_weeks: 1
+    tasks_completed: 2
+    tasks_total: 7
+    notes: |
+      Setting up the basic project structure and configuration files.
+      ACP structure initialized, requirements documented.
+  
+  - id: M2
+    name: Core Implementation
+    status: not_started
+    progress: 0
+    started: null
+    completed: null
+    estimated_weeks: 1
+    tasks_completed: 0
+    tasks_total: 6
+    notes: |
+      Implement server factory, authentication, and example tools.
+  
+  - id: M3
+    name: Development & Deployment
+    status: not_started
+    progress: 0
+    started: null
+    completed: null
+    estimated_weeks: 1
+    tasks_completed: 0
+    tasks_total: 5
+    notes: |
+      Docker, Cloud Run deployment, and documentation.
+
+tasks:
+  milestone_1:
+    - id: task-1
+      name: Initialize ACP Structure
+      status: completed
+      file: agent/tasks/task-1-initialize-acp.md
+      estimated_hours: 1
+      completed_date: 2026-02-14
+      notes: |
+        ACP structure created with templates and bootstrap pattern.
+    
+    - id: task-2
+      name: Create Requirements Document
+      status: completed
+      file: agent/tasks/task-2-requirements.md
+      estimated_hours: 2
+      completed_date: 2026-02-14
+      notes: |
+        Comprehensive requirements document created.
+    
+    - id: task-3
+      name: Create Project Structure
+      status: not_started
+      file: agent/tasks/task-3-project-structure.md
+      estimated_hours: 2
+      completed_date: null
+      notes: |
+        Create src/ directory, package.json, tsconfig.json, etc.
+    
+    - id: task-4
+      name: Configure Build System
+      status: not_started
+      file: agent/tasks/task-4-build-system.md
+      estimated_hours: 2
+      completed_date: null
+      notes: |
+        Set up esbuild, watch mode, and TypeScript compilation.
+    
+    - id: task-5
+      name: Create Client Wrapper
+      status: not_started
+      file: agent/tasks/task-5-client-wrapper.md
+      estimated_hours: 2
+      completed_date: null
+      notes: |
+        Generic client wrapper for external API integration.
+    
+    - id: task-6
+      name: Create Environment Configuration
+      status: not_started
+      file: agent/tasks/task-6-environment.md
+      estimated_hours: 1
+      completed_date: null
+      notes: |
+        .env.example, .gitignore, environment variable handling.
+    
+    - id: task-7
+      name: Create README
+      status: not_started
+      file: agent/tasks/task-7-readme.md
+      estimated_hours: 2
+      completed_date: null
+      notes: |
+        Comprehensive README with setup and usage instructions.
+  
+  milestone_2:
+    - id: task-8
+      name: Implement Server Factory
+      status: not_started
+      file: agent/tasks/task-8-server-factory.md
+      estimated_hours: 3
+      completed_date: null
+      notes: |
+        Core server factory pattern implementation.
+    
+    - id: task-9
+      name: Implement JWT Auth Provider
+      status: not_started
+      file: agent/tasks/task-9-jwt-auth.md
+      estimated_hours: 3
+      completed_date: null
+      notes: |
+        JWT authentication provider with caching.
+    
+    - id: task-10
+      name: Implement Platform Token Resolver
+      status: not_started
+      file: agent/tasks/task-10-token-resolver.md
+      estimated_hours: 3
+      completed_date: null
+      notes: |
+        Platform API integration for credential resolution.
+    
+    - id: task-11
+      name: Create Example Tools
+      status: not_started
+      file: agent/tasks/task-11-example-tools.md
+      estimated_hours: 2
+      completed_date: null
+      notes: |
+        2-3 example tools demonstrating the pattern.
+    
+    - id: task-12
+      name: Create Main Server Entry Point
+      status: not_started
+      file: agent/tasks/task-12-main-server.md
+      estimated_hours: 2
+      completed_date: null
+      notes: |
+        Main index.ts that wires everything together.
+    
+    - id: task-13
+      name: Test Local Development
+      status: not_started
+      file: agent/tasks/task-13-test-local.md
+      estimated_hours: 2
+      completed_date: null
+      notes: |
+        Verify npm run dev works correctly.
+  
+  milestone_3:
+    - id: task-14
+      name: Create Dockerfile
+      status: not_started
+      file: agent/tasks/task-14-dockerfile.md
+      estimated_hours: 2
+      completed_date: null
+      notes: |
+        Multi-stage Dockerfile for production.
+    
+    - id: task-15
+      name: Create Cloud Run Deployment Scripts
+      status: not_started
+      file: agent/tasks/task-15-cloud-run.md
+      estimated_hours: 2
+      completed_date: null
+      notes: |
+        Deployment scripts and documentation.
+    
+    - id: task-16
+      name: Add Testing Infrastructure
+      status: not_started
+      file: agent/tasks/task-16-testing.md
+      estimated_hours: 3
+      completed_date: null
+      notes: |
+        Jest configuration, example tests.
+    
+    - id: task-17
+      name: Complete Documentation
+      status: not_started
+      file: agent/tasks/task-17-documentation.md
+      estimated_hours: 3
+      completed_date: null
+      notes: |
+        Code comments, API docs, deployment guide.
+    
+    - id: task-18
+      name: Final Testing and Polish
+      status: not_started
+      file: agent/tasks/task-18-final-testing.md
+      estimated_hours: 3
+      completed_date: null
+      notes: |
+        End-to-end testing, bug fixes, polish.
+
+documentation:
+  design_documents: 1
+  milestone_documents: 0
+  pattern_documents: 1
+  task_documents: 0
+  last_updated: 2026-02-14
+
+progress:
+  planning: 100
+  implementation: 0
+  testing: 0
+  documentation: 20
+  overall: 10
+
+recent_work:
+  - date: 2026-02-14
+    description: |
+      Initialized ACP structure and created comprehensive requirements document.
+      Project is now ready for implementation.
+    items:
+      - ✅ ACP structure initialized with templates
+      - ✅ Bootstrap pattern documented
+      - ✅ Requirements document created
+      - ✅ Progress tracking initialized
+      - 📋 Ready to create project structure (task-3)
+
+next_steps:
+  - Create project structure (src/, package.json, tsconfig.json)
+  - Configure build system (esbuild, TypeScript)
+  - Create client wrapper template
+  - Set up environment configuration
+  - Create comprehensive README
+
+notes:
+  - Following bootstrap pattern from agent/patterns/bootstrap.md
+  - Using @prmichaelsen/mcp-auth for multi-tenancy
+  - Target deployment: Google Cloud Run
+  - Must support both local development and production deployment
+  - Keep dependencies minimal for maintainability
+
+current_blockers: []
+
+team:
+  - role: Lead Developer
+    name: Agent
+    focus: |
+      Implementing core server infrastructure and authentication.
+
+dependencies:
+  external_services:
+    - name: Platform API
+      status: pending
+      notes: |
+        Will need to document the expected API contract for credential resolution.
+  
+  libraries:
+    - name: "@modelcontextprotocol/sdk"
+      version: "^1.0.4"
+      purpose: |
+        MCP protocol implementation
+    
+    - name: "@prmichaelsen/mcp-auth"
+      version: "latest"
+      purpose: |
+        Multi-tenant authentication wrapper
+    
+    - name: "typescript"
+      version: "^5.7.2"
+      purpose: |
+        Type safety and compilation
+    
+    - name: "esbuild"
+      version: "^0.25.0"
+      purpose: |
+        Fast bundling for production
+  
+  infrastructure:
+    - name: Google Cloud Run
+      status: pending
+      notes: |
+        Will be used for production deployment. Optional for users.
+
+quality:
+  test_coverage: 0
+  code_review_status: pending
+  documentation_status: in_progress
