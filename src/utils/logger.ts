@@ -49,6 +49,26 @@ export class ConsoleLogger implements Logger {
   }
 }
 
-// TODO: Enhance logger implementation
-// This will be implemented in Task 12
-export const logger = new ConsoleLogger();
+/**
+ * Parse log level from environment variable
+ */
+function parseLogLevel(level?: string): LogLevel {
+  switch (level?.toLowerCase()) {
+    case 'debug':
+      return LogLevel.DEBUG;
+    case 'info':
+      return LogLevel.INFO;
+    case 'warn':
+    case 'warning':
+      return LogLevel.WARN;
+    case 'error':
+      return LogLevel.ERROR;
+    default:
+      return LogLevel.INFO;
+  }
+}
+
+// Create default logger with environment-based log level
+export const logger = new ConsoleLogger(
+  parseLogLevel(process.env.LOG_LEVEL)
+);
