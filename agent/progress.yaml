@@ -1,14 +1,14 @@
-# MCP Multi-Tenant Starter - Progress Tracking
+# OpenWeatherMap MCP Server - Progress Tracking
 
 project:
-  name: mcp-multitenant-starter
+  name: weather-mcp
   version: 0.1.0
   started: 2026-02-14
   status: in_progress
   current_milestone: M1
   description: |
-    A starter template for building multi-tenant MCP servers with authentication,
-    credential management, and deployment infrastructure.
+    MCP server for OpenWeatherMap One Call API 3.0 with static configuration.
+    Provides weather data, forecasts, alerts, and geocoding to AI agents.
 
 milestones:
   - id: M1
@@ -216,9 +216,9 @@ tasks:
 
 documentation:
   design_documents: 1
-  milestone_documents: 0
+  milestone_documents: 3
   pattern_documents: 1
-  task_documents: 0
+  task_documents: 1
   last_updated: 2026-02-14
 
 progress:
@@ -231,27 +231,35 @@ progress:
 recent_work:
   - date: 2026-02-14
     description: |
-      Initialized ACP structure and created comprehensive requirements document.
-      Project is now ready for implementation.
+      Project scope updated to OpenWeatherMap MCP server with static configuration.
+      Requirements document rewritten for weather API integration.
+      Following remember-mcp pattern (no tokenResolver, static config).
     items:
-      - ✅ ACP structure initialized with templates
-      - ✅ Bootstrap pattern documented
-      - ✅ Requirements document created
-      - ✅ Progress tracking initialized
-      - 📋 Ready to create project structure (task-3)
+      - ✅ AGENT.md verified up-to-date (v1.0.3)
+      - ✅ Project scope defined: OpenWeatherMap One Call API 3.0
+      - ✅ Requirements document updated for weather-mcp
+      - ✅ Static configuration pattern documented (no tokenResolver)
+      - ✅ 5 core weather tools specified
+      - ✅ remember-mcp pattern analyzed and adopted
+      - ✅ Progress tracking updated
+      - 📋 Ready to begin Task 3: Create Project Structure
 
 next_steps:
   - Create project structure (src/, package.json, tsconfig.json)
-  - Configure build system (esbuild, TypeScript)
-  - Create client wrapper template
-  - Set up environment configuration
-  - Create comprehensive README
+  - Implement OpenWeatherMap API client
+  - Create 5 core weather tools (current, hourly, daily, alerts, geocode)
+  - Implement standalone server (stdio transport)
+  - Implement server factory (multi-tenant mode)
+  - Add response caching
+  - Create comprehensive README with OpenWeatherMap setup
 
 notes:
-  - Following bootstrap pattern from agent/patterns/bootstrap.md
-  - Using @prmichaelsen/mcp-auth for multi-tenancy
-  - Target deployment: Google Cloud Run
-  - Must support both local development and production deployment
+  - Following remember-mcp pattern (static configuration, no tokenResolver)
+  - Using @prmichaelsen/mcp-auth for multi-tenant mode (optional)
+  - OpenWeatherMap One Call API 3.0 integration
+  - Static API key configuration via environment variables
+  - Support both stdio (standalone) and SSE (multi-tenant) transports
+  - Implement response caching to reduce API calls
   - Keep dependencies minimal for maintainability
 
 current_blockers: []
@@ -264,10 +272,11 @@ team:
 
 dependencies:
   external_services:
-    - name: Platform API
-      status: pending
+    - name: OpenWeatherMap One Call API 3.0
+      status: active
       notes: |
-        Will need to document the expected API contract for credential resolution.
+        Primary weather data source. Requires API key from openweathermap.org.
+        Free tier: 1,000 calls/day. Rate limiting and caching required.
   
   libraries:
     - name: "@modelcontextprotocol/sdk"
@@ -276,9 +285,14 @@ dependencies:
         MCP protocol implementation
     
     - name: "@prmichaelsen/mcp-auth"
-      version: "latest"
+      version: "^7.0.4"
       purpose: |
-        Multi-tenant authentication wrapper
+        Multi-tenant authentication wrapper (optional, for SSE mode)
+    
+    - name: "dotenv"
+      version: "^16.4.5"
+      purpose: |
+        Environment variable management
     
     - name: "typescript"
       version: "^5.7.2"
@@ -291,10 +305,10 @@ dependencies:
         Fast bundling for production
   
   infrastructure:
-    - name: Google Cloud Run
-      status: pending
+    - name: OpenWeatherMap Account
+      status: required
       notes: |
-        Will be used for production deployment. Optional for users.
+        Free or paid account required. API key must be configured in .env file.
 
 quality:
   test_coverage: 0
