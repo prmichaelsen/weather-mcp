@@ -28,15 +28,15 @@ milestones:
   - id: M2
     name: Core Implementation
     status: in_progress
-    progress: 40
+    progress: 60
     started: 2026-02-14
     completed: null
     estimated_weeks: 1
-    tasks_completed: 2
+    tasks_completed: 3
     tasks_total: 5
     notes: |
       Implement weather tools, standalone server, server factory, caching, and error handling.
-      All 5 MCP weather tools implemented. Standalone server with stdio transport complete.
+      All 5 tools implemented. Standalone server and server factory complete.
   
   - id: M3
     name: Wrapper Server Deployment
@@ -148,12 +148,14 @@ tasks:
     
     - id: task-10
       name: Implement Server Factory
-      status: not_started
+      status: completed
       file: agent/tasks/task-10-server-factory.md
       estimated_hours: 2
-      completed_date: null
+      completed_date: 2026-02-14
       notes: |
-        Server factory for multi-tenant wrapping by mcp-auth.
+        Implemented createServer factory function for multi-tenant operation.
+        Creates isolated server instances with per-user WeatherClient. Includes
+        comprehensive JSDoc with usage examples.
     
     - id: task-11
       name: Add Response Caching
